@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+    
+    var aNumeros= new Array();
+    for (var i=0; i<=100;i++){
+        var num=Math.floor((Math.random() * 100) + 1);
+        aNumeros[i]=num
+    }
+    
+    //ORDENA LOS NÚMEROS
+    aNumeros.sort(function(a,b){
+                  return a-b;
+                  });
+
+    
+    document.write("<table border=1>")
+    document.write("<tbody>")
+    document.write("<tr>")
+    tr=0  
+    for (var x=0;x<aNumeros.length-1;x++){
+        document.write("<td>"+aNumeros[x]+"</td>");
+        tr++
+        if (tr==10){
+            document.write("</tr>")
+            tr=0
+        }
+    }  
+        
+    document.write("</tbody>")
+    document.write("</table>")
+        
+</script>
+</head>
+<body>
+    
+</body>
+</html>

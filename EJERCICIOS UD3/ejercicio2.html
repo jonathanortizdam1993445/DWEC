@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+    function operador(operando1,aritmetica,operando2){
+        var num1=operando1
+        var operacion=aritmetica
+        var num2=operando2
+        document.open
+        if (operacion=='+'){
+            
+            var resultado=operando1+operando2
+            document.write(operando1+" + "+operando2+" = "+resultado)
+
+        }else if((operacion=='-')){
+            var resultado=operando1-operando2
+            document.write(operando1+" - "+operando2+" = "+resultado)
+            
+        }else if((operacion=='*')){
+            var resultado=operando1*operando2
+            document.write(operando1+" * "+operando2+" = "+resultado)
+            
+        }else if((operacion=='/')){
+            var resultado=operando1/operando2
+            document.write(operando1+" / "+operando2+" = "+resultado)
+            
+        }else{
+            document.write("Expresion no reconocida")
+        }
+    }
+        operador(2,'*',2)
+   
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        document.open
+        var numeros =new Array()
+        //INDICAMOS EL INDICE Y CREAMOS UN CONTADOR
+        for (var i=1; i<=1000; i++){
+            var count=0
+            
+            //INDOCAMOS EL INDICE DEL PRIMER FOR
+            for(var j=1; j<=i; j++){
+                //SI EL RESIDUO ES CERO, LO AÑADIMOS AL CONTADOR
+                if(i%j==0)
+                    count++
+            }
+            //SI EL NÚMERO ES PRIMO, LO AÑADIMOS AL ARRAY
+            if(count==2){
+                numeros.push(i)
+                }
+        }
+        
+        for (var x=0; x<=numeros.length; x++){
+         var numero=numeros[x].toString()
+         var inv=numero.split("").reverse().join("")
+         
+         if (inv==numero){
+             document.write(numero+" es palindromo</br>")
+         }else{
+            document.write(numero+" no es palindromo</br>")
+         }
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>

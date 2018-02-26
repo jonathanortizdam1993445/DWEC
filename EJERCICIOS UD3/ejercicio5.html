@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    var letras=new Array()
+    setInterval(dnis,5000)
+    document.open
+    function dnis(){
+        var dni=prompt("Introduce el dni")
+        if (dni.includes(-1)){
+        //ELIMINO LOS NUMEROS Y GUARDO LAS LETRAS
+        document.write(letras)    
+        }else{
+            var nuevo=dni.replace(/[0-9]+/g,"")
+            letras.push(nuevo)
+            
+        }
+    }
+        
+    </script>
+</body>
+</html>

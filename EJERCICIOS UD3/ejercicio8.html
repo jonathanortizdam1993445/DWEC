@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 8</title>
+</head>
+<body>
+   
+   
+    <script>
+   
+        document.open;
+   
+        var letras = new Array("T","R","W","A","G","M","Y","F","P","D","X","B","N","J","Z","S","Q","V","H","L","C","K","E");
+
+        var entrada = prompt("Dime una letra de la A a la Z");
+       
+        // Si ponemos mas de una letra, solo nos coge la primera
+        var letra = entrada.toUpperCase().substr(0,1);
+        var restoLetra = letras.indexOf(letra);
+        //document.write(restoLetra);
+       
+        var dnies = new Array();
+        for(var i = 1; i<= 999; i++)
+        {
+            var num = i/23;
+            var restoNum = num.toString().substr(0,2);
+            //document.write(restoNum+"--");
+           
+            if(restoLetra == restoNum)
+            {
+                // Meto los valores en el array
+                dnies.push(i);
+            }
+           
+       }
+       
+        for (dni in dnies)
+        {
+            document.write(dnies[dni]+"</br>");
+        }
+        document.close;
+       
+    </script>
+</body>
+</html>

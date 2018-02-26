@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    function biblioteca(){
+        this.libros=[];
+    }
+    
+    biblioteca.prototype.añadir=function(objeto){
+        almacen.libros.push(objeto);
+    }
+    
+    biblioteca.prototype.consultar= function(objeto,nombrebuscar){
+        var cont=0;
+        for(var i=0; i<objeto.libros.length; i++){
+            if(objeto.libros[i].titulo == nombrebuscar){
+                console.log(objeto.libros[i].titulo+" existe")
+                cont++;
+            }
+        }
+        if(cont<1){
+            console.log("no existe "+nombrebuscar)
+        }
+    }
+    
+    biblioteca.prototype.borrar= function(objeto, nombreborrar){
+        for (var i=0; i<objeto.libros.length; i++){
+            if(objeto.libros[i].titulo==nombreborrar){
+                /*VER DIFERENCIA ENTRE DELETE Y SPLICE*/
+                //delete objeto.libros[i];
+                objeto.libros.splice(i,1);
+                console.log("SE HA ELIMNIADO "+nombreborrar)
+            }else{
+                
+            }
+        }      
+    }
+    
+    function libros(titulo, autor, editorial, año){
+        this.titulo=titulo;
+        this.autor=autor;
+        this.editorial=editorial;
+        this.año=año;
+    }
+    
+    revistas.prototype=new Object(libros.prototype);
+    function revistas(volumen,numero,mes,titulo, autor, editorial, año){
+        libros.call(this,titulo, autor, editorial, año)
+        this.volumen=volumen;
+        this.numero=numero;
+        this.mes=mes;
+    }
+    
+    cds.prototype= new Object(libros.prototype);
+    function cds(formato,licencia,titulo, autor, editorial, año){
+        libros.call(this,titulo, autor, editorial, año)
+        this.formato=formato;
+        this.tipo_licencia=licencia;
+    }
+    
+    microfilms.prototype= new Object(revistas.prototype);
+    function microfilms(codigo,volumen,numero,mes,titulo, autor, editorial, año){
+        revistas.call(this,volumen,numero,mes,titulo, autor, editorial, año)
+        this.codigo=codigo;
+    }
+    
+     var almacen = new biblioteca();
+     var libro1 = new libros("ASSASSIN'S CREED","OLIVER BOWDEN","LA ESFERA DE LOS LIBROS","2010");
+     var revista1 = new revistas(1,100,"Abril","DON QUIJOTE DE LA MANCHA","MIGUEL DE CERVANTES","DESTINO","2004");
+     var cd1 =new cds("avi","gratuito","MUNDO ARCANO","HEINZ DELAM","EDICIONES SM","2005");
+     var films1 = new microfilms(12540548,2,130,"Enero","EL NOMBRE DE LA ROSA","UMBERTO ECO","BOMPIANI","1980");
+    
+    almacen.añadir(libro1)
+    almacen.añadir(revista1)
+    almacen.añadir(cd1)
+    almacen.añadir(films1)
+    console.log(almacen.libros)
+    //almacen.consultar(almacen,"DON QUIJOTE")
+    almacen.borrar(almacen,"DON QUIJOTE DE LA MANCHA")
+    console.log(almacen.libros) 
+</script>
+</body>
+</html>

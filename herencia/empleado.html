@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    
+    function empleado(nombre,edad,dni,sueldo){
+        this.nombre=nombre;
+        this.edad=edad;
+        this.dni=dni;
+        this.sueldo=sueldo;
+    }
+    
+    empleado.prototype.mostrarinfo= function(){
+        console.log("Nombre: "+this.nombre+"\nEdad: "+this.edad+"\nDNI: "+this.dni+"\n--------------")
+    }
+    
+    empleado.prototype.calculosueldo=function(){
+        console.log(this.sueldo);
+    }
+    
+    
+    function empresa(){
+        this.trabajadores=[];
+    }
+    
+    empresa.prototype.añadir=function(objeto){
+        fabrica.trabajadores.push(objeto);
+    }
+    
+    
+//    temporal.prototype=new Object(empleado.prototype);
+    function temporal(fecha_alta, fecha_baja,nombre,edad,dni,sueldo){
+        empleado.call(this,nombre,edad,dni,sueldo);
+        this.alta=fecha_alta;
+        this.baja=fecha_baja;
+        
+    }
+    
+    temporal.prototype.calculosueldo=function(){
+        console.log(this.sueldo)
+    }
+    
+//    horas.prototype= new Object(empleado.prototype);
+    function horas(precio,horas,num_horas,nombre,edad,dni,sueldo){
+        empleado.call(this,nombre,edad,dni,sueldo)
+        this.precio=precio;
+        this.horas=horas;
+        this.numhoras=num_horas;
+    }
+    
+    horas.prototype.calculosueldo=function(){
+        console.log((this.precio*this.horas)*this.numhoras)
+    }
+    
+//    fijo.prototype= new Object(empleado.prototype);
+    function fijo(años,nombre,edad,dni,sueldo){
+        empleado.call(this,nombre,edad,dni,sueldo);
+        this.años=años;
+    }
+    
+    fijo.prototype.calculosueldo=function(){
+        console.log(this.sueldo+(this.años*120));
+    }
+    
+    
+    var fabrica= new empresa();
+    var trabajador1= new empleado("antonio","24","75312684N",2000);
+    var trabajador2= new temporal("10-11-2017","10-12-2017","Juan","34","78965412Ñ",1200);
+    var trabajador3= new horas(5,20,28,"Luis","40","45678329X",0);
+    var trabajador4= new fijo(14,"pepe","26","12345678M",1000);
+    
+    fabrica.añadir(trabajador1)
+    fabrica.añadir(trabajador2)
+    fabrica.añadir(trabajador3)
+    fabrica.añadir(trabajador4)
+    console.log(fabrica.trabajadores)
+    /*trabajador1.mostrarinfo()
+    trabajador2.mostrarinfo()
+    trabajador3.mostrarinfo()
+    trabajador4.mostrarinfo()*/
+    trabajador1.calculosueldo();
+    trabajador2.calculosueldo();
+    trabajador3.calculosueldo();
+    trabajador4.calculosueldo();
+</script> 
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    function barco(matri,eslora,fabri){
+        this.matricula=matri;
+        this.eslora=eslora;
+        this.fabricacion=fabri;
+    }
+    
+    function alquiler(nombre,dni,fecha_inicial,fecha_final,pos,barco){
+        this.nombre=nombre;
+        this.dni=dni;
+        this.fecha_in=fecha_inicial;
+        this.fecha_fi=fecha_final;
+        this.posicion=pos;
+        this.tipobarco=barco || [];
+    }
+    
+    alquiler.prototype.coste=function(objeto){
+        /*console.log(objeto.eslora)
+        console.log(parseInt(this.fecha_in))
+        console.log(parseInt(this.fecha_fi))*/
+        
+        var num_dias=Math.abs(parseInt(this.fecha_in)-parseInt(this.fecha_fi));
+        
+        //console.log(num_dias)
+        var total = num_dias*(objeto.eslora*10)*2;
+        console.log("Coste Total: "+total);
+        //num_dias*(10*eslora)*2
+        
+        //var num_dias=alquiler.fecha_in-alquiler.fecha_fi;
+        //num_dias(this.eslora*10)*2
+    }
+    
+    velero.prototype=new Object(barco.prototype);
+    function velero(mastil,matri,eslora,fabri){
+        barco.call(this,matri,eslora,fabri);
+        this.mastiles=mastil;
+        
+    }
+    
+    barcos_deportivos.prototype= new Object(barco.prototype);
+    function barcos_deportivos(motor,matri,eslora,fabri){
+        barco.call(this,matri,eslora,fabri)
+        this.potencia=motor;
+    }
+    
+    yates.prototype= new Object(barco.prototype);
+    
+    function yates(habitacion,motor,matri,eslora,fabri){
+        
+        barcos_deportivos.call(this,motor,matri,eslora,fabri);
+        this.camarotes=habitacion;
+    }
+    var vel= new velero(1,"1234-kJL",100,"1994");
+    var depor= new barcos_deportivos(200,"4567-PGT",200,"2000");
+    var lujo = new yates(2,120,"8901-ALP",300,"2001");
+    
+    var alquilado1= new alquiler ("jon","12345678L","15-12-2017","20-12-2017","vertical",vel);
+    
+    console.log(alquilado1)
+    alquilado1.coste(vel);
+    
+    var alquilado2= new alquiler ("susana","12345678L","15-12-2017","20-12-2017","vertical",depor);
+    
+    console.log(alquilado2)
+    alquilado2.coste(depor);
+    
+    var alquilado3= new alquiler ("rakel","12345678L","15-12-2017","20-12-2017","vertical",lujo);
+    
+    console.log(alquilado3)
+    alquilado3.coste(lujo);
+</script>
+</body>
+</html>

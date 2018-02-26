@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    function contactos(nombre, apellidos, tel, correo){
+        this.nombre=nombre;
+        this.apellidos=apellidos;
+        this.telefono=tel;
+        this.email=correo;
+    }
+    
+    contactos.prototype.mostrar=function(){
+        console.log("nombre: "+this.nombre+" apellido: "+this.apellidos+" telefono: "+this.telefono+" email: "+this.email);
+    }
+    
+    function libreta(){
+        this.direcciones=[];
+    }
+    
+    
+    libreta.prototype.añadir = function(obj){
+        libro.direcciones.push(obj);
+        
+    }
+    
+    libreta.prototype.listar=function(objeto){
+        for(var i=0; i<objeto.direcciones.length; i++){
+            objeto.direcciones[i].mostrar();
+        }
+    }
+    
+    libreta.prototype.buscar= function(objeto,nombrebuscar){
+        var flag=true;
+        for(var i=0; i<objeto.direcciones.length; i++){
+            if(objeto.direcciones[i].nombre == nombrebuscar && flag){
+                console.log("El contacto con nombre "+objeto.direcciones[i].nombre+" existe")
+                
+            }
+        flag=false
+        }
+        if(flag==false){
+            console.log("El contacto "+nombrebuscar+" no existe")
+        }
+    }
+    
+    libreta.prototype.borrar= function(objeto, nombreborrar){
+        for(var i=0; i<objeto.direcciones.length; i++){
+            if(objeto.direcciones[i].nombre==nombreborrar){
+                objeto.direcciones.splice(i,1)
+            }else{
+                
+            }
+        } 
+    }
+    
+   var libro = new libreta();
+   var persona1=new contactos("luis","santiago","987654321","otro@gmail.com");
+   var persona2=new contactos("jose","antonio","4578963218","sus@gmail.com");
+    
+   libro.añadir(persona1);  
+   libro.añadir(persona2);    
+   libro.listar(libro);
+   libro.buscar(libro,"pepe");    
+   //libro.borrar(libro,"jose");  
+   //libro.listar(libro);  
+</script>    
+</body>
+</html>

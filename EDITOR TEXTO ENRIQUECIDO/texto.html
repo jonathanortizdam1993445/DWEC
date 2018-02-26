@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #panel_1{
+            display: inline;
+        }
+        
+        #panel_2{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="panel_1">
+<select id="format">
+    <option>Formato</option>
+</select>
+<select id="fuente">
+    <option>Fuente</option>
+</select>
+<select id="tamaño">
+    <option>size</option>
+</select>
+<select id="color">
+    <option>color</option>
+</select>
+<select id="fondo">
+    <option>background</option>
+</select>
+</div>
+<div id="panel_2">
+    <img src="icons/print.png">
+    <img src="icons/undo.gif">
+    <img src="icons/redo.gif">
+    <img src="icons/removeformat.png"> 
+    <img src="icons/bold.gif">
+    <img src="icons/italic.gif">
+    <img src="icons/underline.gif">
+    <img src="icons/justifyleft.gif">
+    <img src="icons/justifycenter.gif">
+    <img src="icons/justifyright.gif">
+    <img src="icons/insertorderedlist.gif">
+    <img src="icons/insertunorderedlist.gif">
+    <img src="icons/formatblock.gif">
+    <img src="icons/outdent.gif">
+    <img src="icons/indent.gif">
+    <img src="icons/createlink.gif">
+    <img src="icons/cut.gif">
+    <img src="icons/copy.gif">
+    <img src="icons/paste.gif">
+</div>
+
+<div id="modificado">
+    <p>Escribe aquí</p>
+</div>    
+
+<script>
+    var area=document.getElementById("modificado");
+    area.contentEditable="true";
+    
+    var imagenes=document.getElementsByTagName("img");
+    for (var i=0; i<imagenes.length; i++){
+        imagenes[i].onclick=cambiar
+    }
+    
+    function cargar_datos(tipo_datos,elemento){
+           for(var i=0; i<tipo_datos.length; i++){
+           var opciones=document.createElement("option");
+           opciones.appendChild(document.createTextNode(tipo_datos[i]));
+           elemento.appendChild(opciones); 
+        }
+    }
+    
+    var tipos_formato ="H1^H2^H3^H4^H5^H6";
+    tipos_formato=tipos_formato.split("^");
+    var formato=document.getElementById("format");
+    
+    var tipos_fuente="Arial^Calibri^Comic Sans MS^Times New Roman^Georgia^Courier New";
+    tipos_fuente=tipos_fuente.split("^");
+    var fuente=document.getElementById("fuente");
+    
+    var tipos_tamaño="1^2^3^4^5^6^7^8^9^10^11^12^13";
+    tipos_tamaño=tipos_tamaño.split("^");
+    var tamaño=document.getElementById("tamaño");
+    
+    var tipos_color="red^green^blue^yellow^orange^black^white^lightred^lightgreen^lightblue^lightyellow^lightorange^gray^lightgray";
+    tipos_color=tipos_color.split("^");
+    var color=document.getElementById("color");
+    
+    var tipos_fondo="red^green^blue^yellow^orange^black^white^lightred^lightgreen^lightblue^lightyellow^lightorange^gray^lightgray";
+    tipos_fondo=tipos_fondo.split("^");
+    var fondo=document.getElementById("fondo");
+    
+    cargar_datos(tipos_formato,formato);
+    cargar_datos(tipos_fuente,fuente);
+    cargar_datos(tipos_tamaño,tamaño);
+    cargar_datos(tipos_color,color);
+    cargar_datos(tipos_fondo, fondo);
+    
+    function cambiar(){
+        console.log(this)
+
+        var seleccion=this.src
+        
+        var accion=seleccion.split("icons/")[1].split(".")[0];
+        console.log(accion);
+        
+        if(accion=="formatblock"){
+            document.execCommand(accion,false,'<blockquote>')
+        }else if(accion=="paste"){
+           document.execCommand(accion)
+        }else{
+           document.execCommand(accion, false, false); 
+        }
+        onload;
+    }
+    
+    formato.addEventListener("change", function(evento0){
+        
+        //PREGUNTAR SUSI
+        
+        /*
+        if(window.getSelection){
+          var editor=document.getElementsByTagName("p")[0].textContent;
+ 
+          var texto = editor.value.substring(editor.selectionStart, editor.selectionEnd);
+ 
+          console.log(texto);
+        }else{
+            
+        }
+        */
+    });
+    
+    
+    
+    
+</script>            
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    //CREAR IMG
+    var img=document.createElement("IMG");
+    img.setAttribute("id","img");
+    img.setAttribute("src","imagenes/1.gif");
+    
+    //CREAR BOTON
+    var boton=document.createElement("BUTTON");
+    var texto=document.createTextNode("CAMBIAR IMAGEN");
+    boton.setAttribute("id","btn");
+    boton.onclick=change;
+    boton.appendChild(texto);
+    
+    var linea=document.createElement("BR");
+    document.body.appendChild(boton);
+    document.body.append(linea);
+    document.body.appendChild(img);
+    
+    function change(){
+        document.getElementById('img').src="imagenes/"+Math.floor((Math.random()*15)+1)+".gif";
+        
+    } 
+</script> 
+</body>
+</html>

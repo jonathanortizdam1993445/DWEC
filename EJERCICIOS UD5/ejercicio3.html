@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    //IMAGEN
+    var img=document.createElement("IMG");
+    img.setAttribute("id","img");
+    img.setAttribute("src","imagenes/d2.gif");
+    
+    //BOTON ANTERIOR
+    var boton1=document.createElement("BUTTON");
+    var texto1=document.createTextNode("ANTERIOR");
+    boton1.setAttribute("id","btn1");
+    boton1.onclick=anterior;
+    boton1.appendChild(texto1);
+    
+    //BOTON SIGUIENTE
+    var boton2=document.createElement("BUTTON");
+    var texto2=document.createTextNode("SIGUIENTE");
+    boton2.setAttribute("id","btn2");
+    boton2.onclick=siguiente;
+    boton2.appendChild(texto2);
+    
+    //CREAMOS LOS ELEMENTOS
+    document.body.appendChild(img);
+    document.body.appendChild(boton1);
+    document.body.appendChild(boton2);
+    
+    function anterior(){
+       //OBTENER EL NUMERO DE LA IMAGEN
+       document.open;
+       var html=document.documentElement;
+       var enlace=html.getElementsByTagName('img')[0].getAttribute('src');
+       //document.write(enlace)
+       var anterior=enlace.substring(10,11);
+       var num1=parseInt(anterior,10);
+       var num=num1-1;
+       //document.write(partir)
+       if(num>0){;
+        document.getElementById('img').src="imagenes/d"+num+".gif";
+       }
+    }
+    
+    function siguiente(){
+       //OBTENER EL NUMERO DE LA IMAGEN
+       document.open;
+       var html=document.documentElement;
+       var enlace=html.getElementsByTagName('img')[0].getAttribute('src');
+       //document.write(enlace)
+       var siguiente=enlace.substring(10,11);
+       var num1=parseInt(siguiente,10);
+       var num=num1+1;
+        
+       //document.write(partir)
+       if(num<7){
+           document.getElementById('img').src="imagenes/d"+num+".gif";
+       }
+    }
+</script>    
+</body>
+</html>

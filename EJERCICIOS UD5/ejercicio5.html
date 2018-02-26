@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EJERCICIO5</title>
+</head>
+<body>
+<script>
+    
+//CREAMOS EL BOTON DE GENERAR
+var boton1=document.createElement("BUTTON");
+var texto1=document.createTextNode("¡¡GENERA!!");
+boton1.setAttribute("id","btn1");
+boton1.onclick=crear;
+boton1.appendChild(texto1);
+    
+//CREAMOS EL BOTON DE COMPARAR
+var boton2=document.createElement("BUTTON");
+var texto2=document.createTextNode("<<COMPARAR>>");
+boton2.setAttribute("id","btn2");
+boton2.onclick=comparar;
+boton2.appendChild(texto2);
+document.body.appendChild(boton1);
+document.body.after(boton2);
+
+var linea=document.createElement("BR");
+ 
+function crear(){
+//PRIMERA IMAGEN
+var img1=document.createElement("IMG");
+img1.setAttribute("id","img1");
+img1.setAttribute("src","imagenes/"+Math.floor((Math.random()*15)+1)+".gif");
+
+//SEGUNDA IMAGEN
+var img2=document.createElement("IMG");
+img2.setAttribute("id","img2");
+img2.setAttribute("src","imagenes/"+Math.floor((Math.random()*15)+1)+".gif");
+
+document.body.after(img1);
+document.body.after(img2);
+}
+ 
+
+function comparar(){
+    document.open;
+    var html=document.documentElement;
+    var numero=html.getElementsByTagName('img');
+    
+    var comparar=new Array();
+    //document.write(numero.length)
+    
+    for(var i=0; i<=numero.length-1; i++){
+       var num=numero[i].getAttribute('src');
+        //document.write(num)
+       var num1=num.substring(9,11);
+       //document.write(num1)
+       var num2=parseInt(num1,10);
+       //document.write(num2)
+       comparar.push(num2);
+    }
+    //document.write(comparar)
+    if(comparar[0]>comparar[1]){
+        var img3=document.createElement("IMG");
+        img3.setAttribute("id","img3"); img3.setAttribute("src","imagenes/"+comparar[0]+".gif");
+        document.body.after(img3);
+        
+    }else if(comparar[1]>comparar[0]){
+        var img4=document.createElement("IMG");
+        img4.setAttribute("id","img4"); img4.setAttribute("src","imagenes/"+comparar[1]+".gif");
+        document.body.after(img4);
+    }else{
+        var img5=document.createElement("IMG");
+        img5.setAttribute("id","img5"); img5.setAttribute("src","imagenes/"+comparar[0]+".gif");
+        document.body.after(img5);
+    }
+}
+</script>
+</body>
+</html>

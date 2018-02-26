@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EJERCICIO 6</title>
+</head>
+<body>
+<script>
+    //TEXTO FILAS
+    var label1=document.createElement("label");
+    var contenido1 =document.createTextNode("Filas:");
+    label1.append(contenido1);
+    
+    //INPUT FILAS
+    var dato_filas=document.createElement("INPUT");
+    dato_filas.setAttribute("class","filas");
+    dato_filas.setAttribute("value", "");
+    
+    //TEXTO COLUMNAS
+    var label2=document.createElement("label");
+    var contenido2 =document.createTextNode("Columnas:");
+    label2.append(contenido2);
+    
+    //INPUT COLUMNAS
+    var dato_columnas=document.createElement("INPUT");
+    dato_columnas.setAttribute("class","columnas");
+    
+    //BOTON CREAR
+    var boton_crear =document.createElement("BUTTON");
+    var texto=document.createTextNode("Crea");
+    boton_crear.setAttribute("id","btn1");
+    boton_crear.appendChild(texto);
+    boton_crear.onclick=imagen;
+    
+    var linea=document.createElement("br");
+    
+    document.body.appendChild(label1);
+    document.body.append(dato_filas);
+    document.body.appendChild(linea);
+    document.body.append(label2);
+    document.body.append(dato_columnas);
+    document.body.append(linea);
+    document.body.append(boton_crear);
+    
+    function imagen(){
+       document.open
+       var dato1=document.getElementsByClassName("filas")[0].value;
+       var dato2=document.getElementsByClassName("columnas")[0].value;
+       //document.write(dato1)
+       //document.write(dato2)
+        
+        var table=document.createElement("table");
+        var tbody=document.createElement("tbody");
+        table.appendChild(tbody);
+        
+        for (var i=0; i<dato1; i++){
+            var tr=document.createElement("tr");
+            
+            for (var j=0; j<dato2; j++){
+            tbody.appendChild(tr);
+            var td=document.createElement("td");
+            var select=document.createElement("SELECT");
+            td.appendChild(select);
+                
+            var option1=document.createElement("OPTION");
+            var option2=document.createElement("OPTION");
+            var option3=document.createElement("OPTION");
+            var option4=document.createElement("OPTION");
+            var option5=document.createElement("OPTION");
+            var option6=document.createElement("OPTION");
+            var option7=document.createElement("OPTION");
+            var option8=document.createElement("OPTION");
+            var option9=document.createElement("OPTION");
+            var option10=document.createElement("OPTION");
+            var option11=document.createElement("OPTION");
+            var option12=document.createElement("OPTION");
+            var option13=document.createElement("OPTION");
+            var option14=document.createElement("OPTION");
+            var option15=document.createElement("OPTION");
+            
+            option1.text="imagenes/1.gif";
+            option2.text="imagenes/2.gif";
+            option3.text="imagenes/3.gif";
+            option4.text="imagenes/4.gif";
+            option5.text="imagenes/5.gif";
+            option6.text="imagenes/6.gif";
+            option7.text="imagenes/7.gif";
+            option8.text="imagenes/8.gif";
+            option9.text="imagenes/9.gif";
+            option10.text="imagenes/10.gif";
+            option11.text="imagenes/11.gif";
+            option12.text="imagenes/12.gif";
+            option13.text="imagenes/13.gif";
+            option14.text="imagenes/14.gif";
+            option15.text="imagenes/15.gif";
+                
+            select.add(option1);
+            select.add(option2);
+            select.add(option3);
+            select.add(option4);
+            select.add(option5);
+            select.add(option6);
+            select.add(option7);
+            select.add(option8);
+            select.add(option9);
+            select.add(option10);
+            select.add(option11);
+            select.add(option12);
+            select.add(option13);
+            select.add(option14);
+            select.add(option15);
+                 
+            tr.appendChild(td);
+            }
+            document.body.appendChild(table);
+        }
+    
+        //BOTON PRUEBA
+        var boton_prueba =document.createElement("BUTTON");
+        var texto=document.createTextNode("Prueba");
+        boton_prueba.setAttribute("id","btn2");
+        boton_prueba.appendChild(texto);
+        boton_prueba.onclick=tabla;
+        document.body.append(boton_prueba);
+    }
+    
+        function tabla(){
+            var dato1=document.getElementsByClassName("filas")[0].value;
+            var dato2=document.getElementsByClassName("columnas")[0].value;
+            var val_select=document.getElementsByTagName("SELECT");
+            
+            var table2=document.createElement("table");
+            var tbody2=document.createElement("tbody");
+            table2.appendChild(tbody2);
+        
+        for (var p=0; p<dato1; p++){
+            var tr2=document.createElement("tr");
+            for (var j=0; j<dato2; j++){
+            tbody2.appendChild(tr2);
+            var td2=document.createElement("td");
+             
+                for(var k=0; k<val_select.length; k++){
+                    var img1=document.createElement("IMG"); 
+                    img1.setAttribute("id","img");
+                    img1.setAttribute("src",val_select[k].value);
+                
+                }
+                td2.appendChild(img1);
+                tr2.appendChild(td2);
+            }
+            document.body.appendChild(table2);
+        }
+    } 
+</script>
+</body>
+</html>

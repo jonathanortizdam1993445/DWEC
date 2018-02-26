@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: gray;
+        }
+        
+    </style>
+</head>
+<body>
+<form>
+    <input type="password"><button>Acceder</button><div></div> 
+</form>
+<script>
+    var input=document.forms[0].elements[0];
+    console.log(input)
+    for (var i=0; i<10; i++){
+        var boton=document.createElement("BUTTON")
+        var texto=document.createTextNode(i)
+        boton.appendChild(texto)
+        boton.setAttribute("id", i)
+        boton.onclick=insertar
+        document.body.appendChild(boton)
+    }
+    
+    //input.setAttribute("type", "password");
+    
+    function insertar(id){
+        //console.log(this.id);
+        var anterior=input.value
+        //console.log("anterior "+anterior)
+        if(this.id==9){
+            input.value=anterior+"9"
+        }else if(this.id==8){
+            input.value=anterior+"8"
+        }else if(this.id==7){
+            input.value=anterior+"7"
+        }else if(this.id==6){
+            input.value=anterior+"6"
+        }else if(this.id==5){
+            input.value=anterior+"5"
+        }else if(this.id==4){
+            input.value=anterior+"4"
+        }else if(this.id==3){
+            input.value=anterior+"3"
+        }else if(this.id==2){
+            input.value=anterior+"2"
+        }else if(this.id==1){
+            input.value=anterior+"1"
+        }else if(this.id==0){
+            input.value=anterior+"0"
+        }else{
+        
+        }
+        //console.log(input.value.length)    
+    }
+    
+    var boton_aceptar=document.forms[0].elements[1]
+    
+    boton_aceptar.addEventListener("click", function(evento1){
+        var reg=/^\d{4,8}$/;
+        if(reg.test(input.value)){
+            alert("contraseña correcta")
+        }else{
+            alert("contraseña incorrecta")
+            input.preventDefault;
+            evento1.preventDefault();
+        }
+    });
+    
+</script>
+</body>
+</html>

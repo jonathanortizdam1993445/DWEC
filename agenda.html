@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AGENDA</title>
+</head>
+<body>
+<div id="datos">
+   <table border="1">
+        <tr>
+            <td>ID</td>
+            <td>NOMBRE</td>
+            <td>APELLIDOS</td>
+            <td>EMAIL</td>
+        </tr>
+   </table>
+</div>
+<form method="post" action="">
+    <fieldset>
+       <table border="1">
+           <tr>
+               <td><label>Nombre:</label></td>
+               <td><input type="text"></td>
+           </tr>
+           <tr>
+               <td><label>Apellidos:</label></td>
+               <td><input type="text"></td>
+           </tr>
+           <tr>
+               <td><label>Email:</label></td>
+               <td><input type="text"></td>
+           </tr>
+       </table>
+        <button id="cancelar" type="reset">DESCARTAR</button>
+        <input  id="añadir" type="submit" value="añadir">
+    </fieldset>
+</form>
+<script type="text/javascript">  
+var datos =document.getElementById('datos');
+var nombre=document.forms[0].elements[1]
+var apellido=document.forms[0].elements[2]   
+var correo= document.forms[0].elements[3];
+var boton1=document.getElementById('cancelar');
+var boton2=document.getElementById('añadir'); 
+var div=document.getElementsByTagName('table')[0];
+var fila=div.getElementsByTagName('tr')[0];   
+var id=0; 
+var item=0;
+var persona=new Array();
+var mod=new Array();
+var claves=new Array();
+function mostrar(){
+    //LIMPIO LOS VALORES
+    vaciar();
+    for (var j=0; j<localStorage.length; j++){
+        var espacio=localStorage.getItem(j).split("-");
+        persona.push(espacio);
+        for(var k=0; k<7; k++){
+            if(persona[j][k]%2!=0){
+                persona[j].splice(k,1);
+            }else{
+
+            }
+        }
+    }
+    
+    //CREO LOS ELEMENTOS CON SUS VALORES
+    for(var i=0; i<persona.length; i++){
+        var tr=document.createElement('tr')
+            var td=document.createElement('td')
+            var texto=document.createTextNode(i);
+            td.appendChild(texto);
+            tr.appendChild(td)
+        for (var m=0; m<1; m++){
+            //AÑADO EL NOMBRE
+            var td=document.createElement('td')
+            var texto=document.createTextNode(persona[i][m]);
+            td.appendChild(texto);
+            tr.appendChild(td)
+            //AÑADO APELLIDOS
+            var td=document.createElement('td')
+            var texto=document.createTextNode(persona[i][m+1]);
+            td.appendChild(texto);
+            tr.appendChild(td)
+            //AÑADO CORREO
+            var td=document.createElement('td')
+            var texto=document.createTextNode(persona[i][m+2]);
+            td.appendChild(texto);
+            tr.appendChild(td)
+            //AÑADO BOTON EDITAR
+            var td=document.createElement('td')
+            var editar=document.createElement('BUTTON');
+            editar.setAttribute('id','editar'+i)
+            editar.setAttribute('value',i)
+            editar.onclick=cambiar
+            var texto =document.createTextNode('EDITAR');
+            editar.appendChild(texto)
+            td.appendChild(editar);
+            tr.appendChild(td)
+            //AÑADO BOTON BORRAR
+            var td=document.createElement('td')
+            var borrar=document.createElement('BUTTON');
+            borrar.setAttribute('id','borrar'+i)
+            borrar.setAttribute('value',i)
+            borrar.onclick=eliminar;
+            var texto =document.createTextNode('BORRAR');
+            borrar.appendChild(texto)
+            td.appendChild(borrar);
+            tr.appendChild(td)
+            //AÑADO LA FILA A LA TABLA
+            div.append(tr);
+        }
+    }
+}  
+    
+function guardar(){
+   if(localStorage.length==0){
+       localStorage.setItem(id,"nombre:-"+nombre.value+"-apellido:-"+apellido.value+"-correo:-"+correo.value);
+   }else if(boton2.value=="guardar cambios"){
+       localStorage.setItem(mod[0],"nombre:-"+nombre.value+"-apellido:-"+apellido.value+"-correo:-"+correo.value);
+       mod.splice(0,1);
+   }else if(claves.length!=0){
+       localStorage.setItem(claves[0],"nombre:-"+nombre.value+"-apellido:-"+apellido.value+"-correo:-"+correo.value);
+       claves.splice(0,1);
+    }else{
+        id=localStorage.length;
+       localStorage.setItem(id,"nombre:-"+nombre.value+"-apellido:-"+apellido.value+"-correo:-"+correo.value);
+    }
+}
+    
+function vaciar(){
+    datos.removeChild(div);
+    //CREO DE NUEVO CON LOS DATOS ACTUALIZADOS
+    var table=document.createElement('table');
+    var tr_principal=document.createElement('tr')
+    //ID
+    var id=document.createElement('td')
+    var texto1=document.createTextNode('ID')
+    id.appendChild(texto1);
+    tr_principal.appendChild(id);
+    //NOMBRE
+    var nom=document.createElement('td')
+    var texto2=document.createTextNode('NOMBRE')
+    nom.appendChild(texto2);
+    tr_principal.appendChild(nom);
+    //APELLIDOS
+    var ape=document.createElement('td')
+    var texto3=document.createTextNode('APELLIDOS')
+    ape.appendChild(texto3);
+    tr_principal.appendChild(ape);
+    //CORREO
+    var cor=document.createElement('td')
+    var texto4=document.createTextNode('EMAIL')
+    cor.appendChild(texto4);
+    tr_principal.appendChild(cor);
+    table.appendChild(tr_principal);
+    datos.appendChild(div);
+}
+    
+function cambiar(){
+    boton2.value="guardar cambios";
+    var valor=this.value;
+    mod.push(valor);
+    nombre.value=persona[valor][0];
+    apellido.value=persona[valor][1];
+    correo.value=persona[valor][2]; 
+}
+
+function eliminar(){
+    var valor=this.value;
+    //console.log(valor);
+    localStorage.removeItem(valor);
+    persona.splice(valor,1);
+    claves.push(valor);
+    //RECARGO LA PÁGINA
+    //location.reload(); 
+}
+
+window.onload=function(){
+    boton2.onclick=guardar;
+    mostrar();
+}   
+
+</script>    
+</body>
+</html>

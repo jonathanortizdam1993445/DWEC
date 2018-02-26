@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!--  IMPORTAR ARCHIVO JS -->
+    <script src="eventUtil.js" languaje="javascript" type="text/javascript"></script>
+    <style>
+        label{
+            color: orange;
+        }
+        body{
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+<h1>Información de contacto</h1>
+<form name="formulario">
+    <label>Nombre* </label><input type="text" required><br>
+    <label>Edad </label><input type="number"><br>
+    <label>DNI </label><input type="text"><br>
+    <label>Direccion* </label><input type="text" required><br>
+    <label>Selecciona Provincia </label><select></select><br>
+    <label>Localidad </label><select></select><br>
+    <label>Código Postal* </label><input type="text" required><br>
+    <label>Teléfono de Contacto </label><input type="number"><br>
+    <label>Correo electrónico </label><input type="text"><br>
+    <label>Repita su Correo electrónico </label><input type="text"><br>
+    <label>Contraseña </label><input type="password"><br>
+    <label>Repita su Contraseña </label><input type="password"><br>
+    <label>(*) Datos Obligatorios</label><br>
+    <button type="submit">Enviar los datos</button><button type="reset">Empezar de Nuevo</button>
+</form>
+<script>
+    //OBTENGO INPUT NOMBRE-------------------------------------------------->EVENTO 10
+    var nombre=document.forms[0].elements[0];
+
+    //OBTENGO EL INPUT DE LA EDAD------------------------------------------->EVENTO 3
+    var edad=document.forms[0].elements[1];
+    
+    //OBTENGO EL INPUT DEL DNI---------------------------------------------->EVENTO 2
+    var dni=document.forms[0].elements[2]
+    
+    //OBTENGO INPUT DIRECCION----------------------------------------------->EVENTO 11
+    var direccion=document.forms[0].elements[3]
+    
+    //AÑADIMOS LAS OPCIONES AL SELECT de PROVINCIA-------------------------->EVENTO 9
+    var provincia=document.forms[0].elements[4];
+    
+    //CARGO LAS LOCALIDADES AL SELECCIONAR LA PROVINCIA
+    var localidad=document.forms[0].elements[5];
+    
+     //OBTENGO EL INPUT DEL CÓDIGO POSTAL----------------------------------->EVENTO 4
+    var codigo=document.forms[0].elements[6];
+    
+    //OBTENGO EL INPUT DEL TELEFONO----------------------------------------->EVENTO 1
+    var telefono=document.forms[0].elements[7];
+    
+    //OBTENGO EL INPUT DEL CORREO------------------------------------------->EVENTO 7
+    var mail=document.forms[0].elements[8];
+    
+    //COMPRUEBO QUE EL CORREO COINCIDE-------------------------------------->EVENTO 8
+    var mail2=document.forms[0].elements[9];
+    
+    //OBTENGO EL INPUT DEL PASSWORD----------------------------------------->EVENTO 5
+    var password=document.forms[0].elements[10];
+    
+    //COMPRUEBO QUE ES LA MISMA CONTRASEÑA---------------------------------->EVENTO 6
+    var password2=document.forms[0].elements[11];
+    
+    //OBTENGO BOTON ENVIAR-------------------------------------------------->EVENTO 12
+    var boton_enviar=document.forms[0].elements[12];
+    
+    
+    // COMPROBAR CAMPO TELEFONO
+    EventUtil.addEventHandler(telefono,"blur", function(evento1){
+    evento1=EventUtil.getEvent(evento1);
+    var reg=/\d{9}/;
+    if(reg.test(evento1.target.value)){
+        console.log("campo correcto")
+        evento1.target.style.backgroundColor="green";
+    }else{
+        evento1.target.style.backgroundColor="red";
+        console.log("campo correcto");
+    }
+});
+
+    // COMPROBAR CAMPO DNI
+    EventUtil.addEventHandler(dni,"blur", function(evento2){
+    evento2=EventUtil.getEvent(evento2);
+        var reg=/^\d{8}[a-z]$/i;
+        if(reg.test(evento2.target.value)){
+            console.log("campo correcto");
+            evento2.target.style.backgroundColor="green";
+        }else{
+            console.log("campo incorrecto");
+            evento2.target.style.backgroundColor="red";
+        }
+    });
+
+    
+    EventUtil.addEventHandler(edad,"blur",function(evento3){
+    evento3=EventUtil.getEvent(evento3);
+
+        if(evento3.target.value >= 1 && evento3.target.value <= 99){
+            console.log("campo correcto");
+            evento3.target.style.backgroundColor="green";
+        }else{
+            console.log("campo incorrecto")
+            evento3.target.style.backgroundColor="red";
+        }
+    });
+   
+
+    EventUtil.addEventHandler(codigo,"blur",function(evento4){
+        evento4=EventUtil.getEvent(evento4);
+        var reg=/^\d{5}$/;
+        if(reg.test(evento4.target.value)){
+            console.log("campo correcto");
+            evento4.target.style.backgroundColor="green";
+        }else{
+            console.log("campo incorrecto");
+            evento4.target.style.backgroundColor="red";
+        }
+    });
+
+    EventUtil.addEventHandler(password,"blur",function(evento5){
+        evento5=EventUtil.getEvent(evento5);
+        var reg=/\w{6,}/;
+        if(reg.test(evento5.target.value)){
+            console.log("campo correcto");
+            evento5.target.style.backgroundColor="green";
+            console.log(password.value)
+        }else{
+            console.log("campo incorrecto");
+            evento5.target.style.backgroundColor="red";
+        }
+    });
+
+    EventUtil.addEventHandler(password2,"blur",function(evento6){
+        evento6=EventUtil.getEvent(evento6);
+        if(password.value==password2.value){
+            console.log("campo correcto");
+            evento6.target.style.backgroundColor="green";
+        }else{
+            console.log("campo incorrecto");
+            evento6.target.style.backgroundColor="red";
+        }
+    });
+
+    EventUtil.addEventHandler(mail,"blur",function(evento7){
+        evento7=EventUtil.getEvent(evento7);
+        //[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\
+        var reg=/^[a-zA-Z-0-9-.-_]{3,}[\@][\w]{5,}[\.]\w{2,3}/;
+        if(reg.test(evento7.target.value)){
+            console.log("campo correcto");
+            evento7.target.style.backgroundColor="green";
+        }else{
+            console.log("campo incorrecto");
+            evento7.target.style.backgroundColor="red";
+        }
+    });
+
+    EventUtil.addEventHandler(mail2,"blur",function(evento8){
+        evento8=EventUtil.getEvent(evento8);
+        //[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\
+        if(mail.value==mail2.value){
+            console.log("campo correcto");
+            evento8.target.style.backgroundColor="green";
+        }else{
+            console.log("campo incorrecto");
+            evento8.target.style.backgroundColor="red";
+        }
+    });
+
+    EventUtil.addEventHandler(provincia,"click",function(evento9){
+        console.log(evento9.target.value)
+        if(evento9.target.value==""){
+            
+            var opcion=document.createElement("option");
+            opcion.appendChild(document.createTextNode("VALENCIA"))
+            provincia.appendChild(opcion);
+
+            var opcion1=document.createElement("option");
+            opcion1.appendChild(document.createTextNode("ALICANTE"))
+            provincia.appendChild(opcion1);
+
+            var opcion2=document.createElement("option");
+            opcion2.appendChild(document.createTextNode("CASTELLON_DE_LA_PLANA"))
+            provincia.appendChild(opcion2);
+        }else{
+            console.log("cargado correctamente")
+        }
+    });
+
+    EventUtil.addEventHandler(provincia,"change",function(evento9){
+        var ALICANTE = "ALACANT^ALBATERA^ALCOI^ALFÁS DEL PÍ^ALMORADI^ASPE^ALTEA^BANYERES DE MARIOLA^BENIDORM^BENISSA^CALLOSA D'EN SARRIÀ^CALLOSA DEL SEGURA^CALP^CASTALLA^COCENTAINA^COX^CREVILLENT^DÉNIA^DOLORES^EL CAMPELLO^ELDA^ELX^FINESTRAT^GUARDAMAR^IBI^JIJONA/XIXONA^" +53+"LA NUCIA^LA VILA JOIOSA^MONOVAR^MONFORTE DEL CID^MURO DE ALCOY^MUTXAMEL^NOVELDA^ONIL^ORIHUELA^PEGO^PETRER^PILAR DE LA HORADADA^PINOSO^ROJALES^SAN JUAN DE ALICANTE^SANT VICENT DEL RASPEIG^SANTA POLA^SAX^TEULADA^TORREVIEJA^VILLENA^XÀBIA";
+
+        var CASTELLON_DE_LA_PLANA =  "ALCALÀ DE XIVERT^ALCORA^ALMASSORA^ALMENARA^BENICARLÓ^BENICASSIM^BETXÍ^BURRIANA^CASTELLÓ DE LA PLANA^LA VALL D ́UIXÓ^NULES^ONDA^OROPESA DEL MAR^PEÑÍSCOLA^SEGORBE^TORREBLANCA^VILA-REAL^VINARÒS";
+
+        var VALENCIA = "ALAQUÀS^ALBAL^ALBERIC^ALBORAYA^ALCÀSSER^ALDAIA^ALFAFAR^ALGEMESÍ^ALGINET^ALMÀSSERA^ALMUSSAFES^ALZIRA^BENAGUASIL^" +
+        "BENETÚSSER^BENIFAIÒ^BENIMAMET^BENIPARRELL^BETERA^BOCAIRENT^BONREPÒS I MIRAMBELL^BUÑOL^" +
+        "BURJASSOT^CANALS^CANET D'EN BERENGUER^CARCAIXENT^CARLET^CATARROJA^CHIVA^CULLERA^GANDIA^GODELLA^L'ALCÚDIA^L'ELIANA^L'OLLERIA^LLÍRIA^MANISES^MASSAMAGRELL^MASSANASSA^MELIANA^MISLATA^MONCADA^" +
+        "OLIVA^ONTINYENT^PAIPORTA^PATERNA^PICANYA^PICASSENT^POBLA DE VALLBONA^PUÇOL^PUIG^QUART DE POBLET^REQUENA^RIBA ROJA DE TURIA^SAGUNT^SEDAVÍ^SILLA^" +
+        "SUECA^TAVERNES BLANQUES^TAVERNES DE VALLDIGNA^TORRENT^UTIEL^VALENCIA^VALLADA^VILLANUEVA DE CASTELLÓN^XÀTIVA^XIRIVELLA";
+
+        VALENCIA = VALENCIA.split("^");
+        ALICANTE = ALICANTE.split("^");
+        CASTELLON_DE_LA_PLANA = CASTELLON_DE_LA_PLANA.split("^");
+        console.log(evento9.target.value)
+
+        if((provincia.value&&evento9.target.value)=="VALENCIA"){
+            //VACIO EL SELECT
+            localidad.options.length=0;
+            for (var i=0; i<VALENCIA.length; i++){
+                //VUELVO A CARGAR LA INFORMACIÓN CORRECTA
+                var opval=document.createElement("option");
+                opval.appendChild(document.createTextNode(VALENCIA[i]));
+                localidad.appendChild(opval);
+            }
+        }else if(evento9.target.value=="ALICANTE"){
+                //VACIO EL SELECT
+                localidad.options.length=0
+            for (var i=0; i<ALICANTE.length; i++){
+                 //VUELVO A CARGAR LA INFORMACIÓN CORRECTA
+                console.log(localidad.selectedIndex);
+                var opval=document.createElement("option");
+                opval.appendChild(document.createTextNode(ALICANTE[i]));
+                localidad.appendChild(opval);
+            }
+        }else{
+            //VACIO EL SELECT
+            localidad.options.length=0
+            for (var i=0; i<CASTELLON_DE_LA_PLANA.length; i++){
+                 //VUELVO A CARGAR LA INFORMACIÓN CORRECTA
+                var opval=document.createElement("option");
+                opval.appendChild(document.createTextNode(CASTELLON_DE_LA_PLANA[i]));
+                localidad.appendChild(opval);
+            }
+        }
+        onload;
+    });
+
+    EventUtil.addEventHandler(nombre,"blur", function(evento10){
+    evento10=EventUtil.getEvent(evento10);
+    var reg=/^[a-zA-Z]{1,}?[ ]?[a-z]{1,}$/;
+    if(reg.test(evento10.target.value)){
+        console.log("campo correcto")
+        evento10.target.style.backgroundColor="green";
+    }else{
+        console.log("campo incorrecto");
+        evento10.target.style.backgroundColor="red";
+    }
+});
+    
+        EventUtil.addEventHandler(direccion,"blur", function(evento11){
+        evento11=EventUtil.getEvent(evento11);
+        var reg=/^(calle|c.|cl|avenida|av|paseo)/i;
+    if(reg.test(evento11.target.value)){
+        console.log("campo correcto")
+        evento11.target.style.backgroundColor="green";
+        
+    }else{
+        console.log("campo incorrecto");
+        evento11.target.style.backgroundColor="red";
+        
+    }
+});  
+
+    EventUtil.addEventHandler(boton_enviar,"click", function(evento12){
+    evento12=EventUtil.getEvent(evento12)
+    
+    if(nombre.style.backgroundColor=="green" && edad.style.backgroundColor=="green" && dni.style.backgroundColor=="green" && direccion.style.backgroundColor=="green" && codigo.style.backgroundColor=="green" && telefono.style.backgroundColor=="green" && mail.style.backgroundColor=="green" && mail2.style.backgroundColor=="green" && password.style.backgroundColor=="green" && password2.style.backgroundColor=="green"){
+        alert("todo correcto")
+    }else{
+         alert("campo no correcto")
+         evento12.preventDefault();
+    }
+});
+    
+    
+</script>
+</body>
+</html>

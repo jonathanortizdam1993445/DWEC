@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    var boton=document.createElement("button")
+    boton.setAttribute("id", "lanzar")
+    var texto=document.createTextNode("Lanzar el dado")
+    boton.onclick=generar
+    boton.appendChild(texto)
+    document.body.appendChild(boton)
+    
+    var img=document.createElement("img")
+    img.setAttribute("id", "aleatorio")
+    var espacio=document.createElement("br")
+    document.body.appendChild(espacio)
+    document.body.appendChild(img)
+    
+    function generar(){
+        var num=Math.floor((Math.random()*6)+1)
+        console.log(num)
+        var img=document.getElementById("aleatorio").src="imagenes/d"+num+".gif";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+        var factura = {
+        "empresa":    "inventada",
+        "direccion":  "calle falsa",
+        "telefono":   "123456789",
+        "nif":        "451236987L",
+        "importetotal": 0,
+        "tipo_iva": 1.21,
+            "cliente":  {
+                nombre: "pepe",
+                direccion:  "calle ciscar",
+                telefono:  "987654321",
+                nif:  "451236987C",
+            },
+            
+            "lineafactura": [
+               {"descripcion":"aceite", "precio":5, "cantidad":5}, 
+               {"descripcion":"sal", "precio":1, "cantidad":10},
+               {"descripcion":"azucar", "precio":3, "cantidad":50}            
+                             ],
+            "calcularimporte": function(){
+                console.log(this.lineafactura.length)
+                for (var i=0; i<this.lineafactura.length; i++){
+                 this.importetotal+=this.lineafactura[i].precio*this.lineafactura[i].cantidad;
+              }
+            },
+            "mostrartotalfactura": function(){
+                console.log("La factura asciende a "+(this.importetotal*this.tipo_iva))
+            },
+    };
+    factura.calcularimporte();
+    factura.mostrartotalfactura(); 
+</script>
+</body>
+</html>

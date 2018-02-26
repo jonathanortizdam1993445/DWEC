@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+        var objetocliente= new Object();
+        objetocliente.nombre="pepe";
+        objetocliente.direccion="calle pepito de los palotes 123";
+        objetocliente.telf="987654321";
+        objetocliente.niff="123456789L"
+        
+        var factura = new Object();
+        factura.nombreempresa="inventada";
+        factura.direccion="calle falsa 123";
+        factura.telefono="123456789";
+        factura.nif="987654321J";
+        factura.cliente=objetocliente;
+        
+        var lineafactura1=new Object();
+        lineafactura1.descripcion="aceite";
+        lineafactura1.precio=5;
+        lineafactura1.cantidad=5;
+        
+        var lineafactura2=new Object();
+        lineafactura2.descripcion="sal";
+        lineafactura2.precio=1;
+        lineafactura2.cantidad=10;
+        
+        var lineafactura3=new Object();
+        lineafactura3.descripcion="azucar";
+        lineafactura3.precio=3;
+        lineafactura3.cantidad=50;
+        
+        factura.lineafactura=[lineafactura1, lineafactura2, lineafactura3];
+        factura.importetotal=0;
+        factura.tipoiva=21;
+        factura.formapago="efectivo";
+        
+        function calcularimporte(){
+          for (var i=0; i<this.lineafactura.length; i++){
+             this.importetotal+= this.lineafactura[i].precio*this.lineafactura[i].cantidad;
+          }
+        }
+        
+        function mostrartotalfactura(){
+            console.log("La factura asciende a "+this.importetotal)
+        }
+        
+        factura.calimporte=calcularimporte;
+        factura.total=mostrartotalfactura;
+    
+    factura.calimporte();
+    factura.total();
+</script>
+</body>
+</html>

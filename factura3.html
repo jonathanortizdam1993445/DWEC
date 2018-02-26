@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    function empresa(nombre,dir,tel,nif){
+        this.nom=nombre;
+        this.direc=dir;
+        this.telf=tel;
+        this.nif=nif;
+    }
+    
+    function cliente(nombre,dir,tel,nif){
+        this.nom=nombre;
+        this.direc=dir;
+        this.telf=tel;
+        this.nif=nif;
+    }
+    //ESTO ES PARA INDICARLE QUE PUEDE SER UN VALOR O UN ARRRAY
+    function productos(prod){
+        this.listaproductos=prod || [];
+    }
+    
+    function Factura(empresa,cliente,productos){
+        this.datosempresa=empresa;
+        this.datoscliente=cliente;
+        this.listaproductos=productos;
+        this.importetotal=0;
+        this.tipoiva=1.21;
+        
+        Factura.prototype.calcularimporte= function(){
+         //console.log(this.importetotal)
+         //console.log(this.tipoiva)
+           console.log(productos.listaproductos.length)
+           for (var i=0; i<productos.listaproductos.length; i++){
+              this.importetotal+=productos.listaproductos[i].precio*productos.listaproductos[i].cantidad;
+               
+            }
+            
+        } 
+            
+        Factura.prototype.mostrartotalfactura= function(){
+           console.log("La factura asciende a "+this.importetotal*this.tipoiva); 
+        }    
+        
+    }
+        
+    
+    var lafactura= new Factura(
+        new empresa("inventada","calle falsa", "123456789","457812369L"),
+        new cliente("pepe","calle ciscar", "987654321","457812369C"),
+        new productos([
+               {"descripcion":"aceite", "precio":5, "cantidad":5}, 
+               {"descripcion":"sal", "precio":1, "cantidad":10},
+               {"descripcion":"azucar", "precio":3, "cantidad":50}            
+                             ]),
+              
+    )
+    
+    lafactura.calcularimporte();
+    lafactura.mostrartotalfactura();
+
+</script>
+</body>
+</html>

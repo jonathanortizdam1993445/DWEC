@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ejercicio 13 - Comprobar disponibilidad del login</title>
+</head>
+<body>
+<h1>Comprobar disponibilidad del login</h1>
+<form>
+	<label for="login">Nombre de usuario:</label>
+	<input type="text" name="login" id="login" />
+	<a id="comprobar" href="#">Comprobar disponibilidad...</a>
+</form>
+
+<div id="disponibilidad"></div>
+
+<script type="text/javascript">
+    var comprobar=document.getElementById('comprobar');
+    var disponibilidad=document.getElementById('disponibilidad');
+    
+    function peticion(){
+        var usuario=document.getElementById('login').value;
+        if(window.XMLHttpRequest){
+            http=new XMLHttpRequest();
+        }else if(window.ActiveXObject){
+            http= new ActiveXObject("Microsoft.XMLHTTP");
+        } 
+        
+        //ENVIO LOS DATOS AL SERVIDOR
+        http.open('POST','http://localhost/ajax/compruebaDisponibilidad.php', true);
+        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+        http.send(null);
+        
+        
+        //PARA RECOGER LA RESPUESTA DEL SERVIDOR
+        http.onload=function(){
+            if(http.responseText=="no"){
+                disponibilidad.textContent="El usuario "+usuario+" No está disponible";
+            }else{
+                disponibilidad.textContent="El usuario "+usuario+" está disponible";
+            }
+        }
+    }
+    
+    window.onload=function(){
+        comprobar.onclick=peticion;
+    }
+</script>
+</body>
+</html>

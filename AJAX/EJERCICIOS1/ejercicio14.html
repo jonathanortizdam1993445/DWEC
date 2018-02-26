@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ejercicio 14 - Comprobar disponibilidad del login</title>
+</head>
+<body>
+<h1>Comprobar disponibilidad del login</h1>
+<form>
+	<label for="login">Nombre de usuario:</label>
+	<input type="text" name="login" id="login" />
+	<a id="comprobar" href="#">Comprobar disponibilidad...</a>
+</form>
+
+<div id="disponibilidad"></div>
+
+<script type="text/javascript">
+    var comprobar=document.getElementById('comprobar');
+    var disponibilidad=document.getElementById('disponibilidad');
+    
+    function peticion(){
+        var login=document.getElementById('login').value;
+        if(window.XMLHttpRequest){
+            http=new XMLHttpRequest();
+        }else if(window.ActiveXObject){
+            http= new ActiveXObject("Microsoft.XMLHTTP");
+        } 
+        
+        //ENVIO LOS DATOS AL SERVIDOR
+        http.open('POST','http://localhost/ajax/compruebaDisponibilidadXML.php', true);
+        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+        http.send("login="+login);
+        
+        
+        //PARA RECOGER LA RESPUESTA DEL SERVIDOR
+        http.onload=function(){
+            //OBTENGO ETIQUETAS DOC.XML
+            var documento_xml=http.responseXML;
+            var respuesta=documento_xml.getElementsByTagName('respuesta')[0];
+            var mensaje=respuesta.getElementsByTagName('disponible')[0].firstChild.nodeValue;
+            console.log(mensaje);
+            
+            //SI LA RESPUESTA DEL XML ES SÍ
+            if(mensaje=="si"){
+                disponibilidad.textContent="El usuario "+login+" está disponible";
+            }else{
+                //CREO UN MENSAJE
+                var listado="El usuario "+login+" NO está disponible. Pruebe con los siguientes usuarios: <br><ul>";
+                
+                //OBTENGO LAS ETQIUTEAS ALTERNATIVAS
+                var opciones=respuesta.getElementsByTagName('alternativas')[0];
+                //DENTRO DE ALTERNATIVAS BUSCO LAS ETIQUETAS LOGIN
+                var usuarios=opciones.getElementsByTagName('login');
+                //RECORRO TODOS LOS ELEMENTOS
+                for(var i=0; i<usuarios.length; i++){
+                    //AÑADO AL MENSAJE ANTERIOR LOS POSIBLES NOMBRES CON SUS ENLACES Y LE AÑADO UN ELEMENTO ONCLICK QUE LLAMARÁ A LA FUNCION 'MARCAR'
+                    listado+="<li><a href='#' onclick=\"marcar('"+usuarios[i].textContent+"')\">"+usuarios[i].textContent+"<\/a><\/li>";
+                }
+                //PARA TERMINAR EL MENSAJE CIERRO LA ETIQUETA
+                listado+="</ul>"
+                //MUESTRO EN EL DIV EL MENSAJE COMPLETO CONSTRUIDO
+                disponibilidad.innerHTML=listado;
+            }
+        
+        }
+    }
+    //CUANDO CLICKAS EN EL ENLACE, YA ESTÁ GUARDADO EL NOMBRE, SOLO HAY QUE VOLCARLO AL INPUT 
+    function marcar(usuario){
+        var nuevo_usuario=document.getElementById('login');
+        nuevo_usuario.value=usuario;
+    }
+    
+    window.onload=function(){
+        comprobar.onclick=peticion;
+    }
+</script>
+</body>
+</html>

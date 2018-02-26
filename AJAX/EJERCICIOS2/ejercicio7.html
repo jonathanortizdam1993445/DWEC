@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EJERCICIO 7</title>
+</head>
+<body>
+<form>
+<select id="provincia"><option>--PROVINCIAS--</option></select>
+<select id="municipio"></select> 
+</form>
+<script>
+    var select_pro=document.getElementById("provincia");
+    var select_mun=document.getElementById("municipio");
+    
+    var cod_provincias=[];
+    var nom_provincia=[];
+    var nom_municipio=[];
+    
+    if(window.XMLHttpRequest){
+        http= new XMLHttpRequest();
+    }else{
+        http= new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    http.open("POST",'http://localhost/ajax/cargaProvinciasJSON.php', true);
+    http.onload=function(){
+        //OBTENGO EL RESULTADO DE LA PETICION Y CONVIERTO DE STRING A OBJETO JSON
+        var objeto_json=eval('('+http.responseText+')');
+
+        //RECORRO EL OBJETO JSON Y GUARDO EN ARRAYS DIFERENTS EL NOMBRE Y EL CODIGO
+        for (var codigos in objeto_json){
+            nom_provincia.push(objeto_json[codigos]);
+            cod_provincias.push(codigos);
+        }
+        
+        //SI AL CARGAR LA PÁGINA SOLO HAY UNA OPCION, AÑADO OPCIONES 
+        if(select_pro.length==1){
+           for(var x=0; x<nom_provincia.length; x++){  
+                var opcion=document.createElement("OPTION");
+                opcion.setAttribute("VALUE", cod_provincias[x])
+                opcion.appendChild(document.createTextNode(nom_provincia[x]));
+                select_pro.appendChild(opcion);
+            }  
+        //SINO MUESTRO UN MENSAJE POR CONSOLA DE QUE YA HA SIDO CARGADO
+        }else{
+            console.log("YA CARGADO");
+        }
+    }
+    http.send(null); 
+    
+    
+    function cargarmunicipio(){
+        //HAGO LA PETICION AL SERVIDOR INDICANDOLE EL CODIGO DE LA PROVINCIA
+        http.open('POST','http://localhost/ajax/cargaMunicipiosJSON.php',true);
+        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        http.send("provincia="+select_pro.value);
+        http.onload=function(){
+            //SI SOLO TIENE EL VALOR POR DEFECTO, CARGAMOS LA LISTA DE MUNICIPIOS EN FUNCION DEL CODIGO DE LA PROVINCIA 
+            if(select_mun.length==0){
+                var objeto_json=eval('('+http.responseText+')');
+                //RECORRO EL OBJETO JSON Y GUARDO EN EL ARRAY NOM_MUNICIPIO LOS NOMBRES DEL MUNICIPIO ASOCIADOS AL CODIGO DE LA PROVINCIA
+                for (var municipios in objeto_json){
+                    nom_municipio.push(objeto_json[municipios]);
+                }
+                nom_municipio.sort();
+                //RECORRO EL ARRAY ANTERIOR, Y AÑADO AL SELECT DE LOS MUNICIPIOS LOS VALORES
+                for(var x=0; x<nom_municipio.length; x++){  
+                    var opcion=document.createElement("OPTION");
+                    opcion.setAttribute("VALUE", select_pro.value)
+                    opcion.appendChild(document.createTextNode(nom_municipio[x]));
+                    select_mun.appendChild(opcion);
+                }  
+            //SI MARCAMOS OTRA PROVINCIA Y EL CODIGO CAMBIA, VACIAMOS LA LISTA DE LOS MUNICIPIOS Y AGREGAMOS LOS NUEVOS
+            }else if(select_pro.value!=select_mun.value){
+                select_mun.options.length=0;
+                nom_municipio=[];
+                http.responseText;
+                var objeto_json=eval('('+http.responseText+')');
+
+                for (var municipios in objeto_json){
+                    nom_municipio.push(objeto_json[municipios]);
+                }
+
+                nom_municipio.sort();
+                for(var j=0; j<nom_municipio.length; j++){  
+                    var opcion=document.createElement("OPTION");
+                    opcion.setAttribute("VALUE", select_pro.value)
+                    opcion.appendChild(document.createTextNode(nom_municipio[j]));
+                    select_mun.appendChild(opcion);
+                } 
+            }
+        }
+    }
+    //AGREGO UN EVENTO AL SELECT DE LAS PROVINCIAS
+    window.onload=function(){
+       select_pro.onchange=cargarmunicipio;    
+    }
+    
+    
+</script>   
+</body>
+</html>

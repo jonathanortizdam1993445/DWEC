@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EJERCICIO 6</title>
+</head>
+<body>
+<form>
+<select id="provincia"><option>--PROVINCIAS--</option></select>
+<select id="municipio"></select> 
+</form>
+<script>
+    var select_pro=document.getElementById("provincia");
+    var select_mun=document.getElementById("municipio");
+    
+    var cod_provincias=[];
+    var nom_provincia=[];
+    var nom_municipio=[];
+    
+    if(window.XMLHttpRequest){
+        http= new XMLHttpRequest();
+    }else{
+        http= new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+            http.open("POST",'http://localhost/ajax/cargaProvinciasXML.php', true);
+            http.onload=function(){
+            var xml=http.responseXML;
+             //SI AL CARGAR LA PÁGINA SOLO HAY UNA OPCION 
+            if(select_pro.length==1){
+                //ACCEDO A LA ETIQUETA CODIGO DEL XML
+                var codigo= xml.getElementsByTagName('codigo');
+                //Y GUARDO TODOS LOS CODIGOS EN EL ARRAY DE COD_PROVINCIAS
+                for (var i=0; i<codigo.length; i++){
+                    cod_provincias.push(codigo[i].textContent);
+                }
+                //ACCEDO A LA ETIQUETA NOMBRE DEL XML
+                var provincia=xml.getElementsByTagName('nombre');
+                //Y GUARDO TODOS LOS NOMBRES DE LAS PROVINCIAS EN EL ARRAY DE NOM_PROVINCIAS
+                for(var j=0; j<provincia.length; j++){
+                    nom_provincia.push(provincia[j].textContent);
+
+                }
+                //AÑADO OPCIONES AL SELECT 
+                for(var x=0; x<nom_provincia.length; x++){  
+                    var opcion=document.createElement("OPTION");
+                    opcion.setAttribute("VALUE", cod_provincias[x])
+                    opcion.appendChild(document.createTextNode(nom_provincia[x]));
+                    select_pro.appendChild(opcion);
+                }
+            //SINO MUESTRO UN MENSAJE POR CONSOLA DE QUE YA HA SIDO CARGADO
+            }else{
+                console.log("YA CARGADO");
+            }     
+        }
+        http.send(null); 
+    
+    
+    function cargarmunicipio(){
+        //HAGO LA PETICION AL SERVIDOR INDICANDOLE EL CODIGO DE LA PROVINCIA
+        http.open('POST','http://localhost/ajax/cargaMunicipiosXML.php',true);
+        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        http.send("provincia="+select_pro.value);
+        http.onload=function(){
+            //SI SOLO TIENE EL VALOR POR DEFECTO, CARGAMOS LA LISTA DE MUNICIPIOS EN FUNCION DEL CODIGO DE LA PROVINCIA 
+            if(select_mun.length==0){
+                var xml=http.responseXML;
+                //ACCEDO A LA ETIQUETA NOMBRE DEL XML
+                var municipios=xml.getElementsByTagName('nombre')
+                //Y GUARDO TODOS LOS NOMBRES DE LAS PROVINCIAS EN EL ARRAY DE NOM_PROVINCIAS
+                for (var i=0; i<municipios.length; i++){
+                    nom_municipio.push(municipios[i].textContent);
+                }
+                //AÑADO OPCIONES AL SELECT 
+                for(var x=0; x<nom_municipio.length; x++){  
+                    var opcion=document.createElement("OPTION");
+                    opcion.setAttribute("VALUE", select_pro.value)
+                    opcion.appendChild(document.createTextNode(nom_municipio[x]));
+                    select_mun.appendChild(opcion);
+                }  
+            //SI MARCAMOS OTRA PROVINCIA Y EL CODIGO CAMBIA, VACIAMOS LA LISTA DE LOS MUNICIPIOS Y AGREGAMOS LOS NUEVOS
+            }else if(select_pro.value!=select_mun.value){
+                select_mun.options.length=0;
+                nom_municipio=[];
+                var xml=http.responseXML;
+                var municipios=xml.getElementsByTagName('nombre')
+                for (var i=0; i<municipios.length; i++){
+                    nom_municipio.push(municipios[i].textContent);
+                }
+                for(var j=0; j<nom_municipio.length; j++){  
+                    var opcion=document.createElement("OPTION");
+                    opcion.setAttribute("VALUE", select_pro.value)
+                    opcion.appendChild(document.createTextNode(nom_municipio[j]));
+                    select_mun.appendChild(opcion);
+                } 
+            }
+        }
+        
+    }
+    //AGREGO UN EVENTO AL SELECT DE LAS PROVINCIAS
+    window.onload=function(){
+       select_pro.onchange=cargarmunicipio;    
+    }
+    
+    
+</script>   
+</body>
+</html>
